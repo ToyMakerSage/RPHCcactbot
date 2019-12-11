@@ -2,12 +2,12 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("CactbotOverlay")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("RPHCCactbotOverlay")]
+[assembly: AssemblyDescription("A fork of the Cactbot Overlay for use by the RPHC Static")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CactbotOverlay")]
-[assembly: AssemblyCopyright("Copyright 2017")]
+[assembly: AssemblyProduct("RPHCCactbotOverlay")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,5 +20,5 @@ using System.Runtime.InteropServices;
 // - Build Number
 // - Revision
 // GitHub has only 3 version components, so Revision should always be 0.
-[assembly: AssemblyVersion("0.13.2.0")]
-[assembly: AssemblyFileVersion("0.13.2.0")]
+[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyFileVersion("0.1.0.0")]
