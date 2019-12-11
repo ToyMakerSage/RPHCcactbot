@@ -3,6 +3,9 @@
 bin/
 obj/
 packages/
+user/
+!user/raidboss.js
+!user/README.txt
 CactbotOverlay/CactbotOverlay.csproj.user
 CactbotOverlay/ThirdParty/*/*.pdb
 CactbotOverlay/ThirdParty/*/*.dll
