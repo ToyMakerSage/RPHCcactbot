@@ -1,8 +1,8 @@
 'use strict';
 
 //Custom Config for raidboss for use by RPHC Static in TEA
-//v0.1
-//Build Date 11/12/2019 
+//v0.2
+//Build Date 12/12/2019 
 
 //Override for Shortening Static Member's Names
 Options.PlayerNicks = {
@@ -20,23 +20,55 @@ Options.PlayerNicks = {
 Options.DisabledTriggers = {
   'TEA Brute Phase': true,
   'TEA Limit Cut Numbers': true,
+  'TEA Limit Cut Knockback': true,
 };
 
 //Custom Triggers for TEA
 Options.Triggers = [
+  //{
+  //  zoneRegex: /./,
+  //  triggers: [
+  //    {
+  //      id: 'Game Over Yeah',
+  //      regex: /21:........:40000005:/,
+  //      sound: '../../resources/sounds/Momo/gameoveryeah.ogg',
+  //      volume: 0.5,
+  //    },
+  //  ],
+  //},
   {
     zoneRegex: /^The Epic [Oo]f Alexander \(Ultimate\)$/,
-    timelineTriggers: [
+    triggers: [
       {
-        id: 'Hawk Blaster Counter',
-        regex: /(Hawk Blaster)/,
-        condition: function(data) {
-          return data.phase == 'p1t';
-        },
+        id: 'Custom TEA Instance Reset',
+        regex: /21:........:400000(01|10):/
+        suppressSeconds: 5,
         preRun: function(data) {
-          data.puddlecount = (data.puddlecount || 0) + 1;
+          data.phase = 'p0';
         },
-        infoText: function(data) {
+      },
+      {
+        id: 'Custom TEA Phase 2 Transition',
+        regex: Regexes.addedCombatant({ name: 'Cruise Chaser', capture: false }),
+        condition: function(data) {
+          return data.phase == 'p0';
+        },
+        suppressSeconds: 5,
+        preRun: function(data) {
+          data.phase = 'p1t';
+        },
+      },
+      {
+        id: 'Custom P1T Explosion Counter',
+    regex: Regexes.ability({ source: 'Cruise Chaser', id: '4830', capture: false }),
+    condition: function(data) {
+      return data.phase == 'p1t';
+    },
+    suppressSeconds: 1,
+    preRun: function(data) {
+      data.puddlecount = (data.puddlecount || 0) + 1;
+    },
+    infoText: function(data) {
           if(data.south)
           {
             if(data.puddlecount == 7 || data.puddlecount == 3)
@@ -92,16 +124,7 @@ Options.Triggers = [
             }
           }
         },
-      },
-    ],
-    triggers: [
-      {
-        id: 'Custom TEA Phase 2 Transition RP',
-        regex: 'Cruise Chaser:Designation: Blassty. Intruders to central calculation system detected. Initiating extermination protocol!',
-        preRun: function(data, matches) {
-          data.phase = 'p1t';
-        },
-      },
+    },
       {
       // Applies to both limit cuts.
         id: 'Custom TEA Limit Cut Numbers',
@@ -154,7 +177,7 @@ Options.Triggers = [
               '0055':1,
               '0056':1,
             }[matches.id];
-            data.puddlecount = 1; //Initialising a puddle counter for Limit Cut blasters (Not sure if needed?)
+            data.puddlecount = 0; //Initialising a puddle counter for Limit Cut blasters (Not sure if needed?)
           }
         },
         alertText: function(data) {
