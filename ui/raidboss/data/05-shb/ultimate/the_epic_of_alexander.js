@@ -263,9 +263,9 @@
             // Hopefully there's only one here, but you never know.
             return {
               en: 'Pass ' + data.nisiNames[myNisi] + ' to ' +
-                  names.map((x) => data.ShortName(x)).join(', or '),
+                  namesWithoutNisi.map((x) => data.ShortName(x)).join(', or '),
               de: 'Gebe ' + data.nisiNames[myNisi] + ' zu ' +
-                  names.map((x) => data.ShortName(x)).join(', oder '),
+                  namesWithoutNisi.map((x) => data.ShortName(x)).join(', oder '),
             };
           }
 
@@ -1700,7 +1700,7 @@
             de: 'Orange Köder: locke N',
           },
           '2': {
-            en: 'Purple, no tether: O->W',
+            en: 'Purple, no tether: E->W',
             de: 'Lila, keine Verbindung: O->W',
           },
           // This person also has the shared sentence.
