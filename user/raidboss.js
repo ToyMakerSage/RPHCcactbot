@@ -1,7 +1,7 @@
 'use strict';
 
 //Custom Config for raidboss for use by RPHC Static in TEA
-//v0.2
+//v0.1.1
 //Build Date 12/12/2019 
 
 //Override for Shortening Static Member's Names
@@ -31,7 +31,7 @@ Options.Triggers = [
   //    {
   //      id: 'Game Over Yeah',
   //      regex: /21:........:40000005:/,
-  //      sound: '../../resources/sounds/Momo/gameoveryeah.ogg',
+  //      sound: '../../resources/sounds/momo/gameoveryeah.ogg',
   //      volume: 0.5,
   //    },
   //  ],
