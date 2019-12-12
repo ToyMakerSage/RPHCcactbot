@@ -11,6 +11,8 @@ let Options = {
   PopVolume: 0.5,
   Puller: false,
   Position: false,
+  RankOptions: {},
+  CustomMonsters: {},
 };
 
 let gRadar;
@@ -61,7 +63,7 @@ class Radar {
     for (let i in this.monsters) {
       let monster = this.monsters[i];
       let lang = this.lang || 'en';
-      monster.name = monster.name[lang];
+      monster.name = monster.name[lang] || monster.name['en'];
       this.nameToMonster[monster.name.toLowerCase()] = monster;
     }
   }
