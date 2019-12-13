@@ -31,8 +31,12 @@ Options.Triggers = [
   //    {
   //      id: 'Game Over Yeah',
   //      regex: /21:........:40000005:/,
-  //      sound: '../../resources/sounds/momo/gameoveryeah.ogg',
+  //      sound: '../resources/sounds/momo/gameoveryeah.ogg',
   //      volume: 0.5,
+  //      suppressSeconds: 5,
+  //      infoText: function(data) {
+  //        return en: 'Triggered Game Over Yeah';
+  //      },
   //    },
   //  ],
   //},
@@ -41,7 +45,7 @@ Options.Triggers = [
     triggers: [
       {
         id: 'Custom TEA Instance Reset',
-        regex: /21:........:400000(01|10):/
+        regex: /21:........:400000(01|10):/,
         suppressSeconds: 5,
         preRun: function(data) {
           data.phase = 'p0';
@@ -60,15 +64,15 @@ Options.Triggers = [
       },
       {
         id: 'Custom P1T Explosion Counter',
-    regex: Regexes.ability({ source: 'Cruise Chaser', id: '4830', capture: false }),
-    condition: function(data) {
-      return data.phase == 'p1t';
-    },
-    suppressSeconds: 1,
-    preRun: function(data) {
-      data.puddlecount = (data.puddlecount || 0) + 1;
-    },
-    infoText: function(data) {
+        regex: Regexes.ability({ source: 'Cruise Chaser', id: '4830', capture: false }),
+        condition: function(data) {
+          return data.phase == 'p1t';
+        },
+        suppressSeconds: 1,
+        preRun: function(data) {
+          data.puddlecount = (data.puddlecount || 0) + 1;
+        },
+        infoText: function(data) {
           if(data.south)
           {
             if(data.puddlecount == 7 || data.puddlecount == 3)
@@ -124,7 +128,7 @@ Options.Triggers = [
             }
           }
         },
-    },
+      },
       {
       // Applies to both limit cuts.
         id: 'Custom TEA Limit Cut Numbers',
