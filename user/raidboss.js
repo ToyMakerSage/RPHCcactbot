@@ -18,28 +18,25 @@ Options.PlayerNicks = {
 
 // Disable TEA Triggers that have been replaced with custom or total replacements
 Options.DisabledTriggers = {
-  'TEA Brute Phase': true,
+  //'TEA Brute Phase': true,
   'TEA Limit Cut Numbers': true,
   'TEA Limit Cut Knockback': true,
 };
 
 //Custom Triggers for TEA
 Options.Triggers = [
-  //{
-  //  zoneRegex: /./,
-  //  triggers: [
-  //    {
-  //      id: 'Game Over Yeah',
-  //      regex: /21:........:40000005:/,
-  //      sound: '../resources/sounds/momo/gameoveryeah.ogg',
-  //      volume: 0.5,
-  //      suppressSeconds: 5,
-  //      infoText: function(data) {
-  //        return en: 'Triggered Game Over Yeah';
-  //      },
-  //    },
-  //  ],
-  //},
+  {
+    zoneRegex: /./,
+    triggers: [
+      {
+        id: 'Game Over Yeah',
+        regex: /21:........:40000005:/,
+        sound: '../../resources/sounds/momo/gameoveryeah.ogg',
+        volume: 0.5,
+        suppressSeconds: 5,
+      },
+    ],
+  },
   {
     zoneRegex: /^The Epic [Oo]f Alexander \(Ultimate\)$/,
     triggers: [
@@ -52,13 +49,9 @@ Options.Triggers = [
         },
       },
       {
-        id: 'Custom TEA Phase 2 Transition',
-        regex: Regexes.addedCombatant({ name: 'Cruise Chaser', capture: false }),
-        condition: function(data) {
-          return data.phase == 'p0';
-        },
-        suppressSeconds: 5,
-        preRun: function(data) {
+        id: 'Custom TEA Phase 2 Transition RP',
+        regex: 'Cruise Chaser:Designation: Blassty. Intruders to central calculation system detected. Initiating extermination protocol!',
+        preRun: function(data, matches) {
           data.phase = 'p1t';
         },
       },
@@ -192,85 +185,93 @@ Options.Triggers = [
           }
         },
       },
-      {
-        id: 'Custom TEA Brute Phase',
-        regex: Regexes.startsUsing({ source: 'Brute Justice', id: '483E', capture: false }),
-        regexDe: Regexes.startsUsing({ source: 'Brutalus', id: '483E', capture: false }),
-        regexFr: Regexes.startsUsing({ source: 'Justicier', id: '483E', capture: false }),
-        regexJa: Regexes.startsUsing({ source: 'ブルートジャスティス', id: '483E', capture: false }),
-        run: function(data) {
-          data.phase = 'brute';
-          data.resetState = function() {
-            this.enumerations = [];
-            this.buffMap = {};
-            this.tetherBois = {};
-            delete this.limitCutNumber;
-            delete this.limitCutDelay;
-            delete this.puddlecount;
-            delete this.south;
-          };
-          data.resetState();
-          data.nisiNames = {
-            en: {
-              0: 'Blue α',
-              1: 'Orange β',
-              2: 'Purple γ',
-              3: 'Green δ',
-            },
-            de: {
-              0: 'Blau α',
-              1: 'Orange β',
-              2: 'Lila γ',
-              3: 'Grün δ',
-            },
-          }[data.lang];
-          // Convenience function called for third and fourth nisi passes.
-          data.namedNisiPass = (data) => {
-            // error?
-            if (!(data.me in data.finalNisiMap)) {
-              return {
-                en: 'Get Final Nisi (?)',
-                de: 'Nehme letzten Nisi (?)',
-              };
-            }
-            if (data.me in data.nisiMap) {
-              // If you have nisi, you need to pass it to the person who has that final
-              // and who doesn't have nisi.
-              let myNisi = data.nisiMap[data.me];
-              let names = Object.keys(data.finalNisiMap);
-              names = names.filter((x) => data.finalNisiMap[x] == myNisi && x != data.me);
-              let namesWithoutNisi = names.filter((x) => !(x in data.nisiMap));
-              if (namesWithoutNisi.length == 0) {
-                // Still give something useful here.
-                return {
-                  en: 'Pass ' + myNisi + ' Nisi',
-                  de: 'Gebe ' + myNisi + ' Nisi',
-                };
-              }
-              // Hopefully there's only one here, but you never know.
-              return {
-                en: 'Pass ' + data.nisiNames[myNisi] + ' to ' +
-                    names.map((x) => data.ShortName(x)).join(', or '),
-                de: 'Gebe ' + data.nisiNames[myNisi] + ' zu ' +
-                    names.map((x) => data.ShortName(x)).join(', oder '),
-              };
-            }
-            // If you don't have nisi, then you need to go get it from a person who does.
-            let myNisi = data.finalNisiMap[data.me];
-            let names = Object.keys(data.nisiMap);
-            names = names.filter((x) => data.nisiMap[x] == myNisi);
-            if (names.length == 0) {
-              return {
-                en: 'Get ' + data.nisiNames[myNisi],
-                de: 'Nimm ' + data.nisiNames[myNisi],
-              };
-            }
-            return {
-              en: 'Nimm ' + data.nisiNames[myNisi] + ' von ' + data.ShortName(names[0]),
-            };
-          };
-        },
-      },
+      //{
+      //  id: 'Custom TEA Brute Phase',
+      //  regex: Regexes.startsUsing({ source: 'Brute Justice', id: '483E', capture: false }),
+      //  regexDe: Regexes.startsUsing({ source: 'Brutalus', id: '483E', capture: false }),
+      //  regexFr: Regexes.startsUsing({ source: 'Justicier', id: '483E', capture: false }),
+      //  regexJa: Regexes.startsUsing({ source: 'ブルートジャスティス', id: '483E', capture: false }),
+      //  run: function(data) {
+      //    data.phase = 'brute';
+      //    data.resetState = function() {
+      //      this.enumerations = [];
+      //      this.buffMap = {};
+      //      this.tetherBois = {};
+      //      delete this.limitCutNumber;
+      //      delete this.limitCutDelay;
+      //      delete this.puddlecount;
+      //      delete this.south;
+      //    };
+      //    data.resetState();
+      //    data.nisiNames = {
+      //      en: {
+      //        0: 'Blue α',
+      //        1: 'Orange β',
+      //        2: 'Purple γ',
+      //        3: 'Green δ',
+      //      },
+      //      de: {
+      //        0: 'Blau α',
+      //        1: 'Orange β',
+      //        2: 'Lila γ',
+      //        3: 'Grün δ',
+      //      },
+      //    }[data.lang];
+      //    // Convenience function called for third and fourth nisi passes.
+      //    data.namedNisiPass = (data) => {
+      //      // error?
+      //      if (!(data.me in data.finalNisiMap)) {
+      //        return {
+      //          en: 'Get Final Nisi (?)',
+      //          de: 'Nehme letzten Nisi (?)',
+      //        };
+      //      }
+      //      if (data.me in data.nisiMap) {
+      //        // If you have nisi, you need to pass it to the person who has that final
+      //        // and who doesn't have nisi.
+      //        let myNisi = data.nisiMap[data.me];
+      //        let names = Object.keys(data.finalNisiMap);
+      //        names = names.filter((x) => data.finalNisiMap[x] == myNisi && x != data.me);
+      //        let namesWithoutNisi = names.filter((x) => !(x in data.nisiMap));
+      //        // If somehow it's the case that you've had SUCH a late pass that there
+      //        // isn't anybody without without nisi, at least use the names of folks who
+      //        // have the final debuff.
+      //        if (namesWithoutNisi.length == 0)
+      //          namesWithoutNisi = names;
+      //        // If somehow still there's nobody, give a message so that it's not silent
+      //        // but you're probably in trouble.
+      //        if (namesWithoutNisi.length == 0) {
+      //          return {
+      //            en: 'Pass ' + data.nisiNames[myNisi] + ' Nisi',
+      //            de: 'Gebe ' + data.nisiNames[myNisi] + ' Nisi',
+      //          };
+      //        }
+      //        // The common case.  Hopefully there's only one person in the names list,
+      //        // but you never know.
+      //        return {
+      //          en: 'Pass ' + data.nisiNames[myNisi] + ' to ' +
+      //              namesWithoutNisi.map((x) => data.ShortName(x)).join(', or '),
+      //          de: 'Gebe ' + data.nisiNames[myNisi] + ' zu ' +
+      //              namesWithoutNisi.map((x) => data.ShortName(x)).join(', oder '),
+      //        };
+      //      }
+      //      // If you don't have nisi, then you need to go get it from a person who does.
+      //      let myNisi = data.finalNisiMap[data.me];
+      //      let names = Object.keys(data.nisiMap);
+      //      names = names.filter((x) => data.nisiMap[x] == myNisi);
+      //      if (names.length == 0) {
+      //        return {
+      //          en: 'Get ' + data.nisiNames[myNisi],
+      //          de: 'Nimm ' + data.nisiNames[myNisi],
+      //        };
+      //      }
+      //      return {
+      //        en: 'Get ' + data.nisiNames[myNisi] + ' from ' + data.ShortName(names[0]),
+      //        de: 'Nimm ' + data.nisiNames[myNisi] + ' von ' + data.ShortName(names[0]),
+      //      };
+      //    };
+      //  },
+      //},
     ],
   },
 ];
